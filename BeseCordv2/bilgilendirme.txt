@@ -1,0 +1,11 @@
+BeseCord Demo
+Uygulama kendim adına bir demo uygulamasıdır. Bu demo, BeseCord API'sini kullanarak bir 
+mesajlaşma uygulaması oluşturmayı amaçlamaktadır. Uygulama, kullanıcılara mesaj gönderme,
+mesaj alma gibi temel özellikleri içermektedir. Kod dosyalarının her bir açıklaması Türkçe
+olduğundan anlamanız daha kolay olacaktır. Kendim hala geliştirmeye ve ekleme yapmaya
+devam etmeyi düşünüyorum. Elimde başka işler biriktiği için bu uygulamayı geliştirmeye
+ara verdim.
+
+Yaptığınız değişikler ve eklemelerle ilgili beni de bilgilendirmek isterseniz
+discord adresim
+bulutes#0119

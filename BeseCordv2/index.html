@@ -1,0 +1,166 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>
+        BeseCord Demo
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css"/>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+</head>
+<body class="font-roboto text-gray-900 dark:text-white transition-colors duration-200">
+    <!-- Dalga Efekti -->
+    <div class="wave-container">
+        <div class="wave"></div>
+    </div>
+    <!-- Login Panel -->
+    <div class="flex items-center justify-center min-h-screen" id="login-panel">
+        <div class="glass-effect p-8 rounded-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center besecord-text">BeseCord</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2" for="username">Kullanıcı Adı</label>
+                    <input class="w-full p-3 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white" id="username" placeholder="Kullanıcı adınızı girin" type="text"/>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="password">Şifre</label>
+                    <input class="w-full p-3 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white" id="password" placeholder="Şifrenizi Girin" type="password"/>
+                </div>
+                <button class="w-full p-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold" type="submit">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+    <!-- Ana Uygulama -->
+    <div class="flex h-screen hidden" id="main-app">
+        <!-- Sidebar -->
+        <div class="w-64 glass-effect p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold">Kanallar</h2>
+                <button class="text-blue-500 hover:text-blue-600" id="add-channel">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <ul class="flex-1 overflow-y-auto" id="channel-list">
+                <li class="mb-2"><a class="block p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" data-channel="general" href="#"># general</a></li>
+                <li class="mb-2"><a class="block p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" data-channel="random" href="#"># random</a></li>
+                <li class="mb-2"><a class="block p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" data-channel="memes" href="#"># memes</a></li>
+                <li class="mb-2"><a class="block p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" data-channel="tech-talk" href="#"># tech-talk</a></li>
+            </ul>
+            <div class="mt-4">
+                <button class="w-full p-2 rounded bg-red-600 hover:bg-red-700 text-white font-bold" id="delete-channel">Kanalı Sil</button>
+            </div>
+        </div>
+        <!-- Mesaj Alanı -->
+        <div class="flex-1 flex flex-col">
+            <div class="flex items-center justify-between p-4 bg-gray-200 dark:bg-gray-700">
+                <h2 class="text-xl font-bold" id="current-channel"># general</h2>
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <input type="text" id="message-search" placeholder="Mesajı Ara..." class="p-2 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white w-48">
+                        <button id="search-button" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Tema Değiştirme -->
+                    <button class="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white" id="theme-toggle">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <button class="text-blue-500 hover:text-blue-600" id="open-settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="text-red-500 hover:text-red-600" id="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 bg-white dark:bg-gray-900" id="chat-area">
+                <!-- Mesajlar buraya dinamik olarak eklenecek -->
+            </div>
+            <div class="p-4 bg-gray-200 dark:bg-gray-700 flex items-center">
+                <input class="w-full p-3 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white" id="message-input" placeholder="Type a message..." type="text"/>
+                <button class="ml-4 text-yellow-500 hover:text-yellow-600" id="send-emoji">
+                    <i class="fas fa-smile"></i>
+                </button>
+                <button class="ml-4 p-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold" id="send-message">Gönder</button>
+            </div>
+        </div>
+        <!-- Kullanıcı Listesi -->
+        <div class="w-48 bg-gray-100 dark:bg-gray-800 p-4">
+            <h2 class="text-xl font-bold mb-4">Kullanıcılar</h2>
+            <ul class="flex-1 overflow-y-auto" id="user-list">
+                <li class="mb-2 flex justify-between items-center">
+                    <span>User1</span>
+                    <button class="text-blue-500 hover:text-blue-600" onclick="viewProfile('User1')">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </li>
+                <li class="mb-2 flex justify-between items-center">
+                    <span>User2</span>
+                    <button class="text-blue-500 hover:text-blue-600" onclick="viewProfile('User2')">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </li>
+                <li class="mb-2 flex justify-between items-center">
+                    <span>User3</span>
+                    <button class="text-blue-500 hover:text-blue-600" onclick="viewProfile('User3')">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </li>
+                <li class="mb-2 flex justify-between items-center">
+                    <span>User4</span>
+                    <button class="text-blue-500 hover:text-blue-600" onclick="viewProfile('User4')">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Ayarlar Paneli -->
+    <div class="fixed top-0 right-0 h-full glass-effect p-4 hidden" id="settings-panel">
+        <div class="glass-effect p-8 rounded-lg w-full max-w-md mx-auto relative">
+            <button class="absolute top-4 right-4 text-gray-600 dark:text-white" id="close-settings">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-2xl font-bold mb-6 text-center">Ayarlar</h2>
+            <form id="settings-form">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2" for="settings-username">Kullanıcı Adı</label>
+                    <input class="w-full p-3 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white" id="settings-username" placeholder="Yeni kullanıcı adınızı girin" type="text"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2" for="settings-avatar">Avatar</label>
+                    <input class="w-full p-3 rounded bg-white dark:bg-gray-600 border dark:border-gray-500 text-gray-900 dark:text-white" id="settings-avatar" type="file" accept="image/*"/>
+                </div>
+                <button class="w-full p-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold" type="submit">Kaydet</button>
+            </form>
+        </div>
+    </div>
+    <!-- Kullanıcı Profil Modeli -->
+    <div id="user-profile-modal" class="fixed inset-0 bg-black bg-opacity-30 hidden flex items-center justify-center">
+        <div class="glass-effect p-6 rounded-lg w-80">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Kullanıcı Profilleri</h3>
+                <button id="close-profile-modal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                    <img id="profile-avatar" src="" alt="User Avatar" class="w-full h-full object-cover">
+                </div>
+                <h4 id="profile-username" class="text-lg font-semibold"></h4>
+                <div id="profile-status" class="text-sm text-gray-500 dark:text-gray-400"></div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

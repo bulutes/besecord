@@ -1,0 +1,498 @@
+
+:root {
+    /* Açık Tema (Default) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f3f4f6;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --accent-color: #3b82f6;
+    --gradient-start: #4f46e5;
+    --gradient-end: #3b82f6;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.18);
+
+    --hover-color: #2563eb;
+    --border-color: #e5e7eb;
+    --message-bg: #f3f4f6;
+    --channel-hover: #e5e7eb;
+    --pinned-bg: #dbeafe;
+    --pinned-border: #bfdbfe;
+}
+
+
+/* Koyu Tema */
+:root[class='dark'] {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --accent-color: #60a5fa;
+    --gradient-start: #312e81;
+    --gradient-end: #1e40af;
+    --glass-bg: rgba(31, 41, 55, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    --hover-color: #3b82f6;
+    --border-color: #374151;
+    --message-bg: #1f2937;
+    --channel-hover: #374151;
+    --pinned-bg: #1e3a8a;
+    --pinned-border: #1d4ed8;
+
+    
+    /* Parlama Efektleri */
+    --glow-color: #60a5fa;
+    --glow-spread: 3px;
+    --enhanced-glow-color: #60a5fa80;
+    --enhanced-glow-spread: 6px;
+}
+
+/* Tema değişkenlerini uygula */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Mesaj Stilleri */
+.message {
+    position: relative;
+    background-color: var(--message-bg);
+    border: 1px solid var(--border-color);
+    animation: messageAppear 0.3s ease-out;
+    transform-origin: top;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Sabitlenmiş Mesajlar */
+.pinned-messages-section {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
+
+.pinned-messages-section::before {
+    content: "📌 Sabitlenmiş Mesajlar";
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--accent-color);
+}
+
+.message.pinned-message {
+    background-color: var(--pinned-bg);
+    border: 1px solid var(--pinned-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.message.pinned-message .fa-thumbtack {
+    color: var(--accent-color);
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+
+.message.pinned-message:hover .fa-thumbtack {
+    transform: rotate(-45deg) scale(1.1);
+}
+
+
+.message .message-actions {
+    opacity: 0;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.2s ease;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+}
+
+.message-actions button {
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--accent-color);
+    position: relative;
+}
+
+.message-actions button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 4px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s ease;
+}
+
+.message-actions button:active::after {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+
+.message-actions button:hover {
+    transform: scale(1.1);
+    color: var(--hover-color);
+}
+
+/* Kullanıcı Profili Model Stilleri */
+#user-profile-modal {
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+#user-profile-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#user-profile-modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Kullanıcı Listesi ve Avatar Stilleri */
+#user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    color: var(--text-primary);
+}
+
+/* Profil Avatar Stili */
+.profile-avatar-container {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.profile-avatar-container:hover {
+    transform: scale(1.05);
+}
+
+#profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+#profile-avatar:hover {
+    filter: brightness(1.1);
+}
+
+/* Durum Göstergesi */
+#profile-status {
+    position: relative;
+    padding-left: 16px;
+}
+
+#profile-status::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10B981;
+}
+
+#profile-status[data-status="Away"]::before {
+    background-color: #F59E0B;
+}
+
+#profile-status[data-status="Offline"]::before {
+    background-color: #EF4444;
+}
+
+
+#user-list li:hover {
+    background-color: var(--channel-hover);
+}
+
+#user-list button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--accent-color);
+}
+
+#user-list button:hover {
+    color: var(--hover-color);
+}
+
+/* BeseCord yazısı */
+.besecord-text {
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6c5ce7, #a8e6cf);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: gradient 15s ease infinite;
+    transition: all 0.3s ease;
+}
+
+.besecord-text:hover {
+    transform: scale(1.05);
+    letter-spacing: 2px;
+}
+
+:root[class='dark'] .besecord-text {
+    background: linear-gradient(45deg, #a8e6cf, #6c5ce7, #ffd93d, #ff6b6b);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+
+/* Tema geçişi */
+.transition-theme {
+    transition: all 0.3s ease;
+}
+
+/* Tema değiştirme butonu */
+#theme-toggle {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+#theme-toggle:hover {
+    background-color: var(--channel-hover);
+}
+
+/* Kanal Stilleri */
+#channel-list a {
+    color: var(--text-primary);
+    background-color: var(--message-bg);
+    border: 1px solid var(--border-color);
+}
+
+#channel-list a:hover {
+    background-color: var(--channel-hover);
+}
+
+/* Giriş stilleri */
+input, textarea {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* Buton stilleri */
+button.primary {
+    background-color: var(--accent-color);
+    color: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+}
+
+button.primary:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#channel-list a {
+    transition: all 0.3s ease;
+}
+
+#channel-list a:hover {
+    background-color: var(--channel-hover);
+    transform: translateX(4px);
+}
+
+
+/* Giriş Stilleri */
+input, textarea {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 3px var(--accent-color-20);
+}
+
+:root {
+    --accent-color-20: rgba(59, 130, 246, 0.2);
+}
+
+:root[class='dark'] {
+    --accent-color-20: rgba(96, 165, 250, 0.2);
+}
+
+
+/* Buton Stilleri */
+button.primary {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+button.primary:hover {
+    background-color: var(--hover-color);
+}
+
+/* Koyu Mod spesific stiller */
+:root[class='dark'] .message-actions .edit-message {
+    text-shadow: 0 0 var(--glow-spread) var(--glow-color);
+}
+
+:root[class='dark'] .message-actions .delete-message {
+    color: #ef4444;
+    text-shadow: 0 0 var(--glow-spread) #ef444480;
+}
+
+:root[class='dark'] button:hover {
+    text-shadow: 0 0 var(--glow-spread) var(--glow-color);
+}
+
+:root[class='dark'] input:focus {
+    box-shadow: 0 0 var(--glow-spread) var(--glow-color);
+}
+
+:root[class='dark'] #channel-list a:hover {
+    box-shadow: 0 0 var(--enhanced-glow-spread) var(--enhanced-glow-color);
+}
+
+:root[class='dark'] .besecord-text {
+    text-shadow: 0 0 var(--glow-spread) #ffcc00;
+}
+
+:root[class='dark'] .besecord-text:hover {
+    text-shadow: 0 0 var(--enhanced-glow-spread) #ff6600;
+}
+
+/* Arkaplan animasyonları */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(1);
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.55);
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(1);
+    }
+}
+
+/* Dinamik Degrade Arkaplanı */
+body {
+    background: linear-gradient(-45deg, var(--gradient-start), var(--gradient-end));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+/* Dalga efekti */
+.wave-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 88.7'%3E%3Cpath d='M800 56.9c-155.5 0-204.9-50-405.5-49.9-200 0-250 49.9-394.5 49.9v31.8h800v-.2-31.6z' fill='%23ffffff22'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    transform-origin: center bottom;
+    animation: wave 25s linear infinite;
+}
+
+/* Glassmorphism Efekti */
+.glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+#login-panel .bg-gray-100,
+#main-app .bg-gray-100,
+#settings-panel .bg-white,
+#user-profile-modal .bg-white {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Gelişmiş vurgu efekti (Glassmorphism) */
+.glass-effect:hover {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
